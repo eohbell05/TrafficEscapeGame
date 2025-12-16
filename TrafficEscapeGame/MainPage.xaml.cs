@@ -1,24 +1,24 @@
-﻿namespace TrafficEscapeGame
+﻿namespace TrafficEscapeGame;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    public MainPage()
     {
-        int count = 0;
+        InitializeComponent();
+    }
 
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+    private async void StartGame_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//GamePage");
+    }
 
-        private void OnCounterClicked(object? sender, EventArgs e)
-        {
-            count++;
+    private async void Settings_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//SettingsPage");
+    }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
+    private void Exit_Clicked(object sender, EventArgs e)
+    {
+        System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
     }
 }

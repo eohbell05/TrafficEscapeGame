@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrafficEscapeGame.GamePage"
+             BackgroundColor="Black">
+
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1.5*" />
+        </Grid.RowDefinitions>
+
+        <!-- ================= ROAD AREA ================= -->
+        <Grid x:Name="RoadArea"
+              Grid.Row="0"
+              RowSpacing="0"
+              ColumnSpacing="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Background -->
+            <Image Source="background.png"
+                   Grid.RowSpan="8"
+                   Grid.ColumnSpan="3"
+                   Aspect="Fill" />
+
+            <!-- SCORE -->
+            <Label x:Name="ScoreLabel"
+                   Text="Score: 0"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   Margin="20,20,0,0"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start" />
+
+            <!-- HIGH SCORE -->
+            <Label x:Name="HighScoreLabel"
+                   Text="Best: 0"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="#FFD700"
+                   Margin="0,20,20,0"
+                   HorizontalOptions="End"
+                   VerticalOptions="Start" />
+
+            <!-- ================= FUEL BAR (CENTERED) ================= -->
+            <Frame Grid.Row="0"
+                   Grid.Column="1"
+                   Margin="0,60,0,0"
+                   Padding="10"
+                   CornerRadius="10"
+                   BackgroundColor="#333"
+                   HorizontalOptions="Center"
+                   WidthRequest="260">
+
+                <HorizontalStackLayout Spacing="10">
+
+                    <Label Text="⛽"
+                           FontSize="20"
+                           VerticalOptions="Center" />
+
+                    <!-- THIS WAS MISSING -->
+                    <ProgressBar x:Name="FuelBar"
+                                 Progress="1"
+                                 WidthRequest="150"
+                                 HeightRequest="20"
+                                 VerticalOptions="Center" />
+
+                    <!-- THIS WAS MISSING -->
+                    <Label x:Name="FuelLabel"
+                           Text="100%"
+                           FontSize="16"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- PLAYER -->
+            <Image x:Name="PlayerCar"
+                   Source="newplayercar.png"
+                   WidthRequest="140"
+                   HeightRequest="200"
+                   Grid.Row="7"
+                   Grid.Column="1"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Aspect="AspectFit" />
+        </Grid>
+
+        <!-- ================= CONTROLS ================= -->
+        <Grid Grid.Row="1"
+              Padding="10"
+              ColumnSpacing="20"
+              BackgroundColor="#111">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Text="LEFT"
+                    Grid.Column="0"
+                    HeightRequest="70"
+                    FontSize="24"
+                    BackgroundColor="#bba2ff"
+                    CornerRadius="20"
+                    Clicked="LeftButton_Clicked" />
+
+            <Button Text="RIGHT"
+                    Grid.Column="1"
+                    HeightRequest="70"
+                    FontSize="24"
+                    BackgroundColor="#bba2ff"
+                    CornerRadius="20"
+                    Clicked="RightButton_Clicked" />
+        </Grid>
+    </Grid>
+</ContentPage>

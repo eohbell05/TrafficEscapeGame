@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrafficEscapeGame.SettingsPage"
+             Title="Settings"
+             BackgroundColor="Black">
+
+	<Grid>
+		<!-- Background Image -->
+		<Image Source="mainmenubackground.png"
+               Aspect="Fill"
+               Opacity="0.6"/>
+
+		<!-- Content on top of background -->
+		<ScrollView>
+			<VerticalStackLayout Padding="20" Spacing="20">
+
+				<!-- Title -->
+				<Label Text="Settings"
+					   FontSize="32"
+					   FontAttributes="Bold"
+					   TextColor="White"
+					   HorizontalOptions="Center"
+					   Margin="0,20,0,30"/>
+
+				<!-- Difficulty Setting -->
+				<Frame BackgroundColor="#222"
+					   BorderColor="#bba2ff"
+					   CornerRadius="10"
+					   Padding="15">
+					<VerticalStackLayout Spacing="10">
+						<Label Text="Difficulty"
+							   FontSize="20"
+							   FontAttributes="Bold"
+							   TextColor="White"/>
+
+						<Label Text="Controls how fast enemy cars move"
+							   FontSize="14"
+							   TextColor="#AAA"/>
+
+						<Grid ColumnSpacing="10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+
+							<Button x:Name="EasyButton"
+									Grid.Column="0"
+									Text="Easy"
+									BackgroundColor="#4CAF50"
+									TextColor="White"
+									Clicked="EasyButton_Clicked"/>
+
+							<Button x:Name="MediumButton"
+									Grid.Column="1"
+									Text="Medium"
+									BackgroundColor="#666"
+									TextColor="White"
+									Clicked="MediumButton_Clicked"/>
+
+							<Button x:Name="HardButton"
+									Grid.Column="2"
+									Text="Hard"
+									BackgroundColor="#666"
+									TextColor="White"
+									Clicked="HardButton_Clicked"/>
+						</Grid>
+
+						<Label x:Name="DifficultyDescription"
+							   Text="Enemy speed: Slow"
+							   FontSize="14"
+							   TextColor="#FFD700"
+							   HorizontalOptions="Center"/>
+					</VerticalStackLayout>
+				</Frame>
+
+				<!-- Player Car Color Setting -->
+				<Frame BackgroundColor="#222"
+					   BorderColor="#bba2ff"
+					   CornerRadius="10"
+					   Padding="15">
+					<VerticalStackLayout Spacing="10">
+						<Label Text="Player Car Color"
+							   FontSize="20"
+							   FontAttributes="Bold"
+							   TextColor="White"/>
+
+						<Label Text="Choose your car's appearance"
+							   FontSize="14"
+							   TextColor="#AAA"/>
+
+						<Grid ColumnSpacing="10" RowSpacing="10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+
+							<Button x:Name="BlueCarButton"
+									Grid.Column="0"
+									Text="Blue"
+									BackgroundColor="#2196F3"
+									TextColor="White"
+									Clicked="BlueCarButton_Clicked"/>
+
+							<Button x:Name="RedCarButton"
+									Grid.Column="1"
+									Text="Red"
+									BackgroundColor="#666"
+									TextColor="White"
+									Clicked="RedCarButton_Clicked"/>
+
+							<Button x:Name="GreenCarButton"
+									Grid.Column="2"
+									Text="Green"
+									BackgroundColor="#666"
+									TextColor="White"
+									Clicked="GreenCarButton_Clicked"/>
+						</Grid>
+					</VerticalStackLayout>
+				</Frame>
+
+				<!-- Back Button -->
+				<Button Text="Back to Menu"
+						BackgroundColor="#bba2ff"
+						TextColor="White"
+						FontSize="20"
+						HeightRequest="60"
+						CornerRadius="20"
+						Margin="0,20,0,0"
+						Clicked="BackButton_Clicked"/>
+
+			</VerticalStackLayout>
+		</ScrollView>
+	</Grid>
+
+</ContentPage>
