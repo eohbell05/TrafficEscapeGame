@@ -3,19 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TrafficEscapeGame.GamePage"
              BackgroundColor="Black">
-
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="8*" />
             <RowDefinition Height="1.5*" />
         </Grid.RowDefinitions>
 
-        <!-- ================= ROAD AREA ================= -->
         <Grid x:Name="RoadArea"
               Grid.Row="0"
-              RowSpacing="0"
-              ColumnSpacing="0">
-
+              ColumnSpacing="0"
+              RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -33,88 +30,90 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Background -->
             <Image Source="background.png"
                    Grid.RowSpan="8"
                    Grid.ColumnSpan="3"
                    Aspect="Fill" />
 
-            <!-- SCORE -->
+            <!-- SCORE DISPLAY -->
             <Label x:Name="ScoreLabel"
                    Text="Score: 0"
                    Grid.Row="0"
                    Grid.Column="0"
+                   Grid.ColumnSpan="2"
                    FontSize="24"
                    FontAttributes="Bold"
                    TextColor="White"
                    Margin="20,20,0,0"
                    HorizontalOptions="Start"
-                   VerticalOptions="Start" />
+                   VerticalOptions="Start">
+                <Label.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Radius="4" Opacity="0.8"/>
+                </Label.Shadow>
+            </Label>
 
-            <!-- HIGH SCORE -->
+            <!-- HIGH SCORE DISPLAY -->
             <Label x:Name="HighScoreLabel"
                    Text="Best: 0"
                    Grid.Row="0"
-                   Grid.Column="2"
+                   Grid.Column="1"
+                   Grid.ColumnSpan="2"
                    FontSize="20"
                    FontAttributes="Bold"
                    TextColor="#FFD700"
                    Margin="0,20,20,0"
                    HorizontalOptions="End"
-                   VerticalOptions="Start" />
+                   VerticalOptions="Start">
+                <Label.Shadow>
+                    <Shadow Brush="Black" Offset="2,2" Radius="4" Opacity="0.8"/>
+                </Label.Shadow>
+            </Label>
 
-            <!-- ================= FUEL BAR (CENTERED) ================= -->
+            <!-- FUEL DISPLAY -->
             <Frame Grid.Row="0"
-                   Grid.Column="1"
-                   Margin="0,60,0,0"
-                   Padding="10"
-                   CornerRadius="10"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3"
                    BackgroundColor="#333"
-                   HorizontalOptions="Center"
-                   WidthRequest="260">
-
+                   BorderColor="#FFD700"
+                   CornerRadius="10"
+                   Padding="10"
+                   Margin="20,60,20,0"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Center">
                 <HorizontalStackLayout Spacing="10">
-
                     <Label Text="⛽"
                            FontSize="20"
-                           VerticalOptions="Center" />
-
-                    <!-- THIS WAS MISSING -->
+                           VerticalOptions="Center"/>
                     <ProgressBar x:Name="FuelBar"
-                                 Progress="1"
+                                 Progress="1.0"
+                                 ProgressColor="#4CAF50"
                                  WidthRequest="150"
                                  HeightRequest="20"
-                                 VerticalOptions="Center" />
-
-                    <!-- THIS WAS MISSING -->
+                                 VerticalOptions="Center"/>
                     <Label x:Name="FuelLabel"
                            Text="100%"
                            FontSize="16"
                            TextColor="White"
                            FontAttributes="Bold"
-                           VerticalOptions="Center" />
-
+                           VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Frame>
 
-            <!-- PLAYER -->
             <Image x:Name="PlayerCar"
                    Source="newplayercar.png"
                    WidthRequest="140"
                    HeightRequest="200"
                    Grid.Row="7"
                    Grid.Column="1"
-                   HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   Aspect="AspectFit" />
+                   HorizontalOptions="Center"
+                   Aspect="AspectFit"/>
         </Grid>
 
-        <!-- ================= CONTROLS ================= -->
         <Grid Grid.Row="1"
               Padding="10"
               ColumnSpacing="20"
               BackgroundColor="#111">
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />

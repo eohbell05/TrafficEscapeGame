@@ -5,20 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Traffic Escape">
 
-    <Grid Padding="20">
+    <Grid>
         <!-- Background Image -->
         <Image Source="mainmenubackground.png"
                Aspect="Fill"
-               Opacity="0.6"/>
+               Opacity="0.5"/>
 
-        <!-- Content on top of background -->
-        <Grid>
+        <Grid Padding="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
 
-            <!-- Title -->
             <Label
                 Grid.Row="0"
                 Text="Traffic Escape"
@@ -32,39 +30,20 @@
                 </Label.Shadow>
             </Label>
 
-            <!-- Menu buttons -->
             <VerticalStackLayout
                 Grid.Row="1"
                 Spacing="15"
                 VerticalOptions="Center"
                 HorizontalOptions="Center">
-                <Button
-                    Text="Start Game"
-                    WidthRequest="200"
-                    BackgroundColor="#bba2ff"
-                    TextColor="White"
-                    FontSize="20"
-                    HeightRequest="60"
-                    CornerRadius="20"
-                    Clicked="StartGame_Clicked" />
-                <Button
-                    Text="Settings"
-                    WidthRequest="200"
-                    BackgroundColor="#bba2ff"
-                    TextColor="White"
-                    FontSize="20"
-                    HeightRequest="60"
-                    CornerRadius="20"
-                    Clicked="Settings_Clicked" />
-                <Button
-                    Text="Exit"
-                    WidthRequest="200"
-                    BackgroundColor="#bba2ff"
-                    TextColor="White"
-                    FontSize="20"
-                    HeightRequest="60"
-                    CornerRadius="20"
-                    Clicked="Exit_Clicked" />
+                <Button Text="Start Game" WidthRequest="200" BackgroundColor="#bba2ff"
+                        TextColor="White" FontSize="20" HeightRequest="60"
+                        CornerRadius="20" Clicked="StartGame_Clicked" />
+                <Button Text="Settings" WidthRequest="200" BackgroundColor="#bba2ff"
+                        TextColor="White" FontSize="20" HeightRequest="60"
+                        CornerRadius="20" Clicked="Settings_Clicked" />
+                <Button Text="Exit" WidthRequest="200" BackgroundColor="#bba2ff"
+                        TextColor="White" FontSize="20" HeightRequest="60"
+                        CornerRadius="20" Clicked="Exit_Clicked" />
             </VerticalStackLayout>
         </Grid>
     </Grid>

@@ -9,6 +9,8 @@ public partial class GamePage : ContentPage
     private int _playerLane = 1;
     private readonly List<Image> _enemies = new();
     private readonly List<Image> _jerryCans = new();
+    private readonly Dictionary<Image, int> _enemySpeeds = new();
+    private int _moveCounter = 0;
     private readonly Random _random = new();
     private Timer? _gameTimer;
 
@@ -36,10 +38,15 @@ public partial class GamePage : ContentPage
         Grid.SetColumn(PlayerCar, 1);
         PlayerCar.TranslationX = 0;
 
+        // Load and apply car color
+        string carColor = Preferences.Get("CarColor", "Blue");
+        ApplyCarColor(carColor);
+
         _score = 0;
         _carsDogged = 0;
         _fuel = 100;
         _gameStartTime = DateTime.Now;
+        _moveCounter = 0;
 
         UpdateScoreDisplay();
         UpdateFuelDisplay();
@@ -57,6 +64,17 @@ public partial class GamePage : ContentPage
         _gameTimer.Elapsed += OnTimerElapsed;
         _gameTimer.AutoReset = true;
         _gameTimer.Start();
+    }
+
+    private void ApplyCarColor(string color)
+    {
+        // Change the car image based on selected color
+        PlayerCar.Source = color switch
+        {
+            "Red" => "redplayercar.png",
+            "Green" => "greenplayercar.png",
+            _ => "newplayercar.png" // Blue (default)
+        };
     }
 
     private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -141,7 +159,7 @@ public partial class GamePage : ContentPage
 
         var enemy = new Image
         {
-            Source = "newenemycar.png",
+            Source = "redenemycar.png",
             WidthRequest = 100,
             HeightRequest = 150,
             Aspect = Aspect.Fill
@@ -158,6 +176,9 @@ public partial class GamePage : ContentPage
             2 => moveDistance,
             _ => 0
         };
+
+        // RANDOMIZE ENEMY SPEED - creates gaps to avoid impossible situations
+        _enemySpeeds[enemy] = _random.Next(1, 4); // 1=fast, 2=medium, 3=slow
 
         _enemies.Add(enemy);
     }
@@ -192,25 +213,52 @@ public partial class GamePage : ContentPage
     // ================= GAME LOOP =================
     private void MoveEnemies()
     {
-        // Enemy spawn (unchanged)
-        if (_random.Next(0, 8) == 0)
+        _moveCounter++; // Track game ticks for varied enemy speeds
+
+        // Get difficulty and adjust spawn rates
+        string difficulty = Preferences.Get("Difficulty", "Easy");
+
+        int enemySpawnChance = difficulty switch
+        {
+            "Easy" => 10,      // 1 in 10 chance (less enemies)
+            "Medium" => 8,     // 1 in 8 chance
+            "Hard" => 5,       // 1 in 5 chance (more enemies!)
+            _ => 10
+        };
+
+        int jerryCanSpawnChance = difficulty switch
+        {
+            "Easy" => 10,      // 1 in 10 (more fuel)
+            "Medium" => 12,    // 1 in 12
+            "Hard" => 15,      // 1 in 15 (less fuel - harder!)
+            _ => 12
+        };
+
+        // Enemy spawn with difficulty-based rate
+        if (_random.Next(0, enemySpawnChance) == 0)
             SpawnEnemy();
 
-        // 🔥 Jerry can spawn INCREASED
-        if (_random.Next(0, 12) == 0)
+        // Jerry can spawn with difficulty-based rate
+        if (_random.Next(0, jerryCanSpawnChance) == 0)
             SpawnJerryCan();
 
         var removeEnemies = new List<Image>();
         var removeCans = new List<Image>();
 
+        // Move enemies with varied speeds
         foreach (var enemy in _enemies)
         {
-            int row = Grid.GetRow(enemy);
-            if (row < 7)
-                Grid.SetRow(enemy, row + 1);
-            else
-                removeEnemies.Add(enemy);
+            // Only move this enemy if the counter matches its speed
+            if (_moveCounter % _enemySpeeds[enemy] == 0)
+            {
+                int row = Grid.GetRow(enemy);
+                if (row < 7)
+                    Grid.SetRow(enemy, row + 1);
+                else
+                    removeEnemies.Add(enemy);
+            }
 
+            // Check collision
             if (Grid.GetRow(enemy) == Grid.GetRow(PlayerCar) &&
                 Math.Abs(enemy.TranslationX - PlayerCar.TranslationX) < 50)
             {
@@ -219,6 +267,7 @@ public partial class GamePage : ContentPage
             }
         }
 
+        // Move jerry cans (normal speed)
         foreach (var can in _jerryCans)
         {
             int row = Grid.GetRow(can);
@@ -240,13 +289,16 @@ public partial class GamePage : ContentPage
             }
         }
 
+        // Remove off-screen enemies and clean up speed tracking
         foreach (var e in removeEnemies)
         {
             RoadArea.Children.Remove(e);
             _enemies.Remove(e);
+            _enemySpeeds.Remove(e); // Clean up speed dictionary
             _carsDogged++;
         }
 
+        // Remove collected jerry cans
         foreach (var c in removeCans)
         {
             RoadArea.Children.Remove(c);
@@ -301,6 +353,7 @@ public partial class GamePage : ContentPage
         foreach (var c in _jerryCans) RoadArea.Children.Remove(c);
         _enemies.Clear();
         _jerryCans.Clear();
+        _enemySpeeds.Clear(); // Clear speed tracking
     }
 
     private void ResetGame()
@@ -310,7 +363,12 @@ public partial class GamePage : ContentPage
         _fuel = 100;
         _score = 0;
         _carsDogged = 0;
+        _moveCounter = 0;
         _gameStartTime = DateTime.Now;
+
+        // Reapply car color after reset
+        string carColor = Preferences.Get("CarColor", "Blue");
+        ApplyCarColor(carColor);
 
         UpdateScoreDisplay();
         UpdateFuelDisplay();
